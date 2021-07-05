@@ -1,21 +1,28 @@
 //
-//  HabitViewController.swift
+//  EditHabitViewController.swift
 //  MyHabits
 //
-//  Created by Евгений Кряквин on 17.05.2021.
+//  Created by Евгений Кряквин on 03.07.2021.
 //
 
 import UIKit
 
-//protocol ReloadDelegate: class {
-//    func reloadCollection()
-//}
-
-class HabitViewController: UIViewController {
-   
-    var delegate: ReloadDelegate?
+class EditHabitViewController: UIViewController {
+    var delegateEditToDetail: CallFromEditToDetail?
 
     //MARK: - Create Views
+    
+    public var habit: Habit
+    
+    init(habit: Habit) {
+        self.habit = habit
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let habitNameLabel: UILabel = {
         let habitName = UILabel()
@@ -29,7 +36,7 @@ class HabitViewController: UIViewController {
     
     private let habitTextField: UITextField = {
         let habitTextField = UITextField()
-        habitTextField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        //habitTextField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         habitTextField.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         habitTextField.textAlignment = .left
         habitTextField.textColor = .black
@@ -104,10 +111,40 @@ class HabitViewController: UIViewController {
         wheel.addTarget(self, action: #selector(handleDatePicker(sender:)), for: .valueChanged)
             return wheel
         }()
+    
+    private let deleteButton: UIButton = {
+        let deleteButton = UIButton()
+        deleteButton.setTitle("Удалить привычку", for: .normal)
+        deleteButton.setTitleColor(.red, for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        return deleteButton
+    }()
+    
+    @objc func deleteButtonPressed() {
+        let alert = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку \(habit.name)", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) {_ in
+            if let oldHabit = HabitsStore.shared.habits.firstIndex(where: ({$0.name == self.habit.name})) {
+                HabitsStore.shared.habits.remove(at: oldHabit)
+            }
+            self.dismiss(animated: true) {[weak self] in
+                self?.delegateEditToDetail?.callFromEditToDetail()
+            }
+           
+        }
+        reloadInputViews()
+        alert.addAction(cancelAction)
+        alert.addAction(deleteAction)
+        self.present(alert, animated: true, completion: nil)
+        
+    }
 
     private let navBar: UINavigationBar = {
         let navBar = UINavigationBar()
-        let navItem = UINavigationItem(title: "Создать")
+        let navItem = UINavigationItem(title: "Править")
         let cancelItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancelHabit))
         cancelItem.tintColor = UIColor(red: 161/255, green: 22/255, blue: 204/255, alpha: 1)
         let doneItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(saveHabit))
@@ -122,20 +159,15 @@ class HabitViewController: UIViewController {
         
     
     @objc func saveHabit() {
-        if habitTextField.text != "" {
             let newHabit = Habit(name: habitTextField.text!, date: timeDatePicker.date, color: habitColorPickerButton.backgroundColor!)
-        let store = HabitsStore.shared
-            store.habits.append(newHabit)
+        if let habitIndex = HabitsStore.shared.habits.firstIndex(where: ({$0 == self.habit})) {
+            HabitsStore.shared.habits[habitIndex] = newHabit
+        }
             reloadInputViews()
             dismiss(animated: true) { [weak self] in
-                self?.delegate?.reloadCollection()
+                self?.delegateEditToDetail?.callFromEditToDetail()
+                self?.navigationController?.popToRootViewController(animated: true)
             }
-        }
-        else {
-            let alert = UIAlertController(title: "Нет названия", message: "Введите название привычки", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ок", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
     }
     
     @objc func cancelHabit() {
@@ -179,6 +211,11 @@ class HabitViewController: UIViewController {
         view.addSubview(timeTextField)
         view.addSubview(timeDatePicker)
         view.addSubview(navBar)
+        view.addSubview(deleteButton)
+        
+        habitTextField.text = habit.name
+        habitColorPickerButton.backgroundColor = habit.color
+        timeTextField.text = habit.dateString
     
         let constraints = [
             habitNameLabel.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 24),
@@ -215,7 +252,12 @@ class HabitViewController: UIViewController {
 
             navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            deleteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            deleteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24)
+            
             
             
             
@@ -228,7 +270,7 @@ class HabitViewController: UIViewController {
 
 
 //MARK: - UIColorPicker Delegate
-extension HabitViewController: UIColorPickerViewControllerDelegate {
+extension EditHabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor
         habitColorPickerButton.backgroundColor = color

@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F1FEF402683817400146BDD /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1FEF3F2683817400146BDD /* HabitDetailsViewController.swift */; };
+		3F1FEF432683855600146BDD /* HabitDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1FEF422683855600146BDD /* HabitDetailTableViewCell.swift */; };
+		3F4C6E1E2690656000CC6216 /* EditHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4C6E1D2690656000CC6216 /* EditHabitViewController.swift */; };
 		3F6CCE5D264D7F060043CFCC /* HabitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6CCE5C264D7F060043CFCC /* HabitsViewController.swift */; };
+		3F74BA3E26907AE300C576E8 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F74BA3D26907AE300C576E8 /* Protocols.swift */; };
 		3F771231264ECA7100655659 /* InfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F771230264ECA7100655659 /* InfoStorage.swift */; };
 		3F771235264ECC6A00655659 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F771234264ECC6A00655659 /* InfoTableViewCell.swift */; };
 		3F771238264ECF8800655659 /* SecondInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F771237264ECF8800655659 /* SecondInfoViewController.swift */; };
@@ -24,7 +28,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F1FEF3F2683817400146BDD /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
+		3F1FEF422683855600146BDD /* HabitDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailTableViewCell.swift; sourceTree = "<group>"; };
+		3F4C6E1D2690656000CC6216 /* EditHabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitViewController.swift; sourceTree = "<group>"; };
 		3F6CCE5C264D7F060043CFCC /* HabitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsViewController.swift; sourceTree = "<group>"; };
+		3F74BA3D26907AE300C576E8 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		3F771230264ECA7100655659 /* InfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoStorage.swift; sourceTree = "<group>"; };
 		3F771234264ECC6A00655659 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		3F771237264ECF8800655659 /* SecondInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondInfoViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +67,8 @@
 				3FA8FDDD264B1DE500F6FE61 /* HabitsStore.swift */,
 				3F6CCE5C264D7F060043CFCC /* HabitsViewController.swift */,
 				3F7712412652C51100655659 /* HabitViewController.swift */,
+				3F1FEF3F2683817400146BDD /* HabitDetailsViewController.swift */,
+				3F4C6E1D2690656000CC6216 /* EditHabitViewController.swift */,
 			);
 			path = Habits;
 			sourceTree = "<group>";
@@ -78,6 +88,7 @@
 			children = (
 				3FCDA4C32667EA500057CDDB /* ProgressCollectionViewCell.swift */,
 				3FCDA4C72667ECE10057CDDB /* HabitCollectionViewCell.swift */,
+				3F1FEF422683855600146BDD /* HabitDetailTableViewCell.swift */,
 			);
 			path = HabitsCells;
 			sourceTree = "<group>";
@@ -111,6 +122,7 @@
 				3FEE65E2264B177000A19373 /* Main.storyboard */,
 				3FEE65E5264B177300A19373 /* Assets.xcassets */,
 				3FEE65EA264B177300A19373 /* Info.plist */,
+				3F74BA3D26907AE300C576E8 /* Protocols.swift */,
 			);
 			path = MyHabits;
 			sourceTree = "<group>";
@@ -185,16 +197,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F74BA3E26907AE300C576E8 /* Protocols.swift in Sources */,
 				3F771231264ECA7100655659 /* InfoStorage.swift in Sources */,
+				3F4C6E1E2690656000CC6216 /* EditHabitViewController.swift in Sources */,
 				3F771235264ECC6A00655659 /* InfoTableViewCell.swift in Sources */,
 				3FA8FDDE264B1DE500F6FE61 /* HabitsStore.swift in Sources */,
 				3FEE65E1264B177000A19373 /* ViewController.swift in Sources */,
+				3F1FEF402683817400146BDD /* HabitDetailsViewController.swift in Sources */,
 				3FCDA4C82667ECE10057CDDB /* HabitCollectionViewCell.swift in Sources */,
 				3FEE65DD264B177000A19373 /* AppDelegate.swift in Sources */,
 				3F6CCE5D264D7F060043CFCC /* HabitsViewController.swift in Sources */,
 				3FCDA4C42667EA500057CDDB /* ProgressCollectionViewCell.swift in Sources */,
 				3F771238264ECF8800655659 /* SecondInfoViewController.swift in Sources */,
 				3F7712422652C51100655659 /* HabitViewController.swift in Sources */,
+				3F1FEF432683855600146BDD /* HabitDetailTableViewCell.swift in Sources */,
 				3FEE65DF264B177000A19373 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
