@@ -15,7 +15,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
             habitName.text = habit?.name
             habitName.textColor = habit?.color
             habitTimeLabel.text = habit?.dateString
-            habitCheckButton.layer.borderColor = habit?.color.cgColor
+            button1.layer.borderColor = habit?.color.cgColor
             habitCountDays.text = "Счетчик: \(habit!.trackDates.count)"
         }
     }
@@ -43,13 +43,13 @@ class HabitCollectionViewCell: UICollectionViewCell {
         return habitCountDays
     }()
     
-    private let habitCheckButton: UIButton = {
-        let habitCheckButton = UIButton()
-        habitCheckButton.layer.cornerRadius = 20
-        habitCheckButton.layer.borderWidth = 1
-        habitCheckButton.addTarget(self, action: #selector(checkHabit), for: .touchUpInside)
-        habitCheckButton.translatesAutoresizingMaskIntoConstraints = false
-        return habitCheckButton
+    lazy var button1: UIButton = {
+        let button1 = UIButton()
+        button1.layer.borderWidth = 1
+        button1.layer.cornerRadius = 20
+        button1.addTarget(self, action: #selector(checkHabit), for: .touchUpInside)
+        button1.translatesAutoresizingMaskIntoConstraints = false
+        return button1
     }()
     
     var delegateCell: ReloadDelegate?
@@ -60,6 +60,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
         }else{
             HabitsStore.shared.track(habit!)
+            contentView.reloadInputViews()
             self.delegateCell?.reloadCollection()
             print("Not tracked")
 
@@ -82,7 +83,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(habitName)
         contentView.addSubview(habitTimeLabel)
         contentView.addSubview(habitCountDays)
-        contentView.addSubview(habitCheckButton)
+        //contentView.addSubview(habitCheckButton)
+        contentView.addSubview(button1)
         
         let constraints = [
             habitName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -97,10 +99,15 @@ class HabitCollectionViewCell: UICollectionViewCell {
             habitCountDays.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             habitCountDays.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             
-            habitCheckButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            habitCheckButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            habitCheckButton.widthAnchor.constraint(equalToConstant: 40),
-            habitCheckButton.heightAnchor.constraint(equalTo: habitCheckButton.widthAnchor)
+            button1.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            button1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            button1.widthAnchor.constraint(equalToConstant: 40),
+            button1.heightAnchor.constraint(equalTo: button1.widthAnchor),
+            
+//            button1.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+//            button1.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+//            button1.widthAnchor.constraint(equalToConstant: 40),
+//            button1.heightAnchor.constraint(equalTo: button1.widthAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)

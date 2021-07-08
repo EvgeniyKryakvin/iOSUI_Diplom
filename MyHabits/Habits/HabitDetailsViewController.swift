@@ -9,7 +9,7 @@ import UIKit
 
 class HabitDetailsViewController: ViewController {
     
-    var delegateFromDetailToHabits: ReloadDelegate?
+    weak var delegateFromDetailToHabits: ReloadDelegate?
     private lazy var editVC = EditHabitViewController(habit: habit)
     
     private let habitDetailTableView = UITableView(frame: .zero, style: .grouped)
@@ -106,6 +106,12 @@ extension HabitDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = habitDetailTableView.dequeueReusableCell(withIdentifier: String(describing: HabitDetailTableViewCell.self)) as! HabitDetailTableViewCell
         cell.textLabel?.text = HabitsStore.shared.trackDateString(forIndex: indexPath.item)
+        let date = HabitsStore.shared.dates[indexPath.item]
+        if HabitsStore.shared.habit(habit, isTrackedIn: date ) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         return cell
     }
     
@@ -118,6 +124,7 @@ extension HabitDetailsViewController: CallFromEditToDetail {
     func callFromEditToDetail() {
         print("Edit to Detail")
         self.delegateFromDetailToHabits?.reloadCollection()
+    
     }
     
     

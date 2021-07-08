@@ -8,7 +8,7 @@
 import UIKit
 
 class EditHabitViewController: UIViewController {
-    var delegateEditToDetail: CallFromEditToDetail?
+    weak var delegateEditToDetail: CallFromEditToDetail?
 
     //MARK: - Create Views
     
@@ -166,7 +166,6 @@ class EditHabitViewController: UIViewController {
             reloadInputViews()
             dismiss(animated: true) { [weak self] in
                 self?.delegateEditToDetail?.callFromEditToDetail()
-                self?.navigationController?.popToRootViewController(animated: true)
             }
     }
     
@@ -214,6 +213,7 @@ class EditHabitViewController: UIViewController {
         view.addSubview(deleteButton)
         
         habitTextField.text = habit.name
+        habitTextField.textColor = habit.color
         habitColorPickerButton.backgroundColor = habit.color
         timeTextField.text = habit.dateString
     

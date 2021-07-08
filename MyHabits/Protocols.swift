@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol ReloadDelegate {
+protocol ReloadDelegate: class {
     func reloadCollection()
 }
 
-protocol CallFromEditToDetail {
+protocol CallFromEditToDetail: class {
     func callFromEditToDetail()
 }

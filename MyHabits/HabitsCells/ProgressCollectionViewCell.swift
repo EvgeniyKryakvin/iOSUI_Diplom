@@ -9,11 +9,11 @@ import UIKit
 
 class ProgressCollectionViewCell: UICollectionViewCell {
     
-    private let progressBar: UIProgressView = {
+    let progressBar: UIProgressView = {
         let progressBar = UIProgressView()
         progressBar.progressTintColor = UIColor(red: 161/255, green: 22/255, blue: 204/255, alpha: 1)
-        progressBar.setProgress(HabitsStore.shared.todayProgress, animated: true)
         progressBar.trackTintColor = .systemGray2
+        progressBar.setProgress(HabitsStore.shared.todayProgress, animated: true)
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         return progressBar
     }()
@@ -29,9 +29,9 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         return progressLabel
     }()
     
-    private let percentLabel: UILabel = {
+    let percentLabel: UILabel = {
         let percentLabel = UILabel()
-        percentLabel.text = "\(Int(HabitsStore.shared.todayProgress * 100))%"
+        //percentLabel.text = "\(Int(HabitsStore.shared.todayProgress * 100))%"
         percentLabel.textColor = .systemGray2
         percentLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         percentLabel.textAlignment = .left

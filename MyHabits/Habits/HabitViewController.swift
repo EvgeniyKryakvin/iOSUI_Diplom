@@ -7,13 +7,9 @@
 
 import UIKit
 
-//protocol ReloadDelegate: class {
-//    func reloadCollection()
-//}
-
 class HabitViewController: UIViewController {
    
-    var delegate: ReloadDelegate?
+     weak var delegate: ReloadDelegate?
 
     //MARK: - Create Views
     

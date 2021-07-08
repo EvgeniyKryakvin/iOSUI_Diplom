@@ -67,13 +67,23 @@ extension HabitsViewController: UICollectionViewDataSource {
         if indexPath.section == 0 {
             let progressCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ProgressCollectionViewCell.self), for: indexPath) as! ProgressCollectionViewCell
             progressCell.backgroundColor = .white
+            progressCell.progressBar.setProgress(HabitsStore.shared.todayProgress, animated: true)
+            progressCell.percentLabel.text = "\(Int(HabitsStore.shared.todayProgress * 100))%"
             progressCell.layer.cornerRadius = 10
             
             return progressCell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: HabitCollectionViewCell.self), for: indexPath) as! HabitCollectionViewCell
-            cell.habit = HabitsStore.shared.habits[indexPath.item]
             cell.delegateCell = self
+            cell.habit = HabitsStore.shared.habits[indexPath.item]
+            if cell.habit?.isAlreadyTakenToday == true {
+                cell.button1.tintColor = cell.habit?.color
+                cell.button1.backgroundColor = cell.habit?.color
+                cell.button1.setImage(.checkmark, for: .normal)
+            } else {
+                cell.button1.backgroundColor = .clear
+                cell.button1.setImage(nil, for: .normal)
+            }
             cell.backgroundColor = .white
             cell.layer.cornerRadius = 10
             return cell
