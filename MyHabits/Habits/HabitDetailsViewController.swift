@@ -39,7 +39,7 @@ class HabitDetailsViewController: ViewController {
     }
     
     @objc func editHabit() {
-        navigationController?.present(EditHabitViewController(habit: habit), animated: true, completion: nil)
+        navigationController?.present(editVC, animated: true, completion: nil)
     }
     
     private func setupDetailTableView() {

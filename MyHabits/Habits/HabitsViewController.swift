@@ -118,7 +118,9 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section != 0 {
             let habit = HabitsStore.shared.habits[indexPath.item]
-            navigationController?.pushViewController(HabitDetailsViewController(habit: habit), animated: true)
+            let detailVC = HabitDetailsViewController(habit: habit)
+            detailVC.delegateFromDetailToHabits = self
+            navigationController?.pushViewController(detailVC, animated: true)
     }
   }
 }
